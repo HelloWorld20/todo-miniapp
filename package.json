@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev-static": "cd static && npm run dev:weapp",
     "dev-server": "nodemon"
   },
   "keywords": [

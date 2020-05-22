@@ -7,3 +7,4 @@ export const createRouter = createRouter_.createRouter;
 export const response = response_;
 export const ServiceError = error_1.ServiceError;
 export const catchError = error_1.catchError;
+export const HTTP_STATUS = error_1.HTTP_STATUS;

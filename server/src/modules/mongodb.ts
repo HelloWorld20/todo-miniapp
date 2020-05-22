@@ -12,9 +12,9 @@ const mongoConf = config.get("mongo");
 // mongoose.connect('mongodb://用户名:密码@127.0.0.1:27017/数据库名称')
 const DB_URL = (function() {
   if (mongoConf.user && mongoConf.password) {
-    return `mongodb://${mongoConf.user}:${mongoConf.password}@${mongoConf.host}:${mongoConf.port}/admin`;
+    return `mongodb://${mongoConf.user}:${mongoConf.password}@${mongoConf.host}:${mongoConf.port}/${mongoConf.dbName}`;
   } else {
-    return `mongodb://${mongoConf.host}:${mongoConf.port}/admin`;
+    return `mongodb://${mongoConf.host}:${mongoConf.port}/${mongoConf.dbName}`;
   }
 })();
 
@@ -30,7 +30,7 @@ class Mongo {
     /**
      * 连接
      */
-    mongoose.connect(DB_URL, err => {
+    mongoose.connect(DB_URL, (err) => {
       if (err) {
         this.isConnected = false;
         console.log("Mongoose 连接错误: " + err);
@@ -44,9 +44,9 @@ class Mongo {
   find(collection: string, schema: any, condition?: Record<string, any>) {
     const Model = mongoose.model(collection, schema);
     if (condition) {
-      return Model.find(condition, {_id: 0, __v: 0});
+      return Model.find(condition, { _id: 0, __v: 0 });
     } else {
-      return Model.find({}, {_id: 0, __v: 0});
+      return Model.find({}, { _id: 0, __v: 0 });
     }
   }
   // 插入一个
@@ -72,7 +72,7 @@ class Mongo {
   }
 
   getModal(collection: string, schema: any) {
-    const Modal = mongoose.model(collection,schema);
+    const Modal = mongoose.model(collection, schema);
     return Modal;
   }
 
