@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "cd server && npm install && cd ../static && npm install",
     "dev-static": "cd static && npm run dev:weapp",
-    "dev-server": "nodemon"
+    "dev-server": "nodemon",
+    "build-static": "cd static && npm run build",
+    "build-server": "cd server && npm run build"
   },
   "keywords": [
     "todolist",

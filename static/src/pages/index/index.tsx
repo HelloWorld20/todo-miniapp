@@ -95,7 +95,7 @@ class Index extends Component {
           <Text>{this.props.counter.num}</Text>
         </View>
         <View>
-          <Text>Hello, World!!!</Text>
+          <Text className="color">Hello, World!!</Text>
         </View>
       </View>
     );

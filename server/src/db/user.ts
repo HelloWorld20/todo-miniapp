@@ -2,7 +2,7 @@
  * @Author: jianghong.wei 
  * @Date: 2020-05-20 14:10:10 
  * @Last Modified by: jianghong.wei
- * @Last Modified time: 2020-05-20 14:10:33
+ * @Last Modified time: 2020-05-26 15:45:35
  * 用户信息，数据库控制
  */
 
@@ -11,17 +11,17 @@ import * as mongoose from "mongoose";
 
 const model = {
   // 个人信息都是微信的数据
-  city: String,
-  country: String,
-  headimgurl: String,
-  latitude: Number,
-  longitude: Number,
-  nickName: String,
+  // city: String,
+  // country: String,
+  // headimgurl: String,
+  // latitude: Number,
+  // longitude: Number,
+  // nickName: String,
   openid: String,
-  province: String,
-  sex: Number,
-  unionid: Number,
-  userId: Number,
+  // province: String,
+  // sex: Number,
+  // unionid: Number,
+  // userId: Number,
   state: Number, // 用户状态。1：正常。-1：封禁
 };
 
@@ -33,6 +33,10 @@ export const insert = (value: any) => {
 };
 
 export const find = (condition?: any): any => {
+  return mongo.find(COLLECTION, schema, condition);
+};
+
+export const findOne = async (condition: any) => {
   return mongo.find(COLLECTION, schema, condition);
 };
 

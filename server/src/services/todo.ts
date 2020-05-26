@@ -30,20 +30,50 @@ export async function getTodoItem(req: Request, id: string) {
   const result = await dbTodo.find({ openid, id });
   return result;
 }
-
-export async function addOrUpdate(
+/**
+ * 新增或更新记录
+ * @export
+ * @param {Request} req
+ * @param {{
+ *     type: dbTodo.ETodoType; // 种类：ACTION、FOUCUSED、DESSERT
+ *     urgency: number; // 紧急性
+ *     significance: number; // 重要性
+ *     priority: number; // 优先级
+ *   }} params
+ * @param {string} [id]
+ * @returns
+ */
+export async function addOrUpdateTodo(
   req: Request,
-  value: Record<string, any>,
+  params: {
+    type: dbTodo.ETodoType; // 种类：ACTION、FOUCUSED、DESSERT
+    urgency: number; // 紧急性
+    significance: number; // 重要性
+    priority: number; // 优先级
+  },
   id?: string
 ) {
-  if (!value) {
+  if (!params) {
     throw new ServiceError(HTTP_STATUS.BAD_REQUEST, "参数错误");
   }
   const openid: string = req.session && req.session.openid;
 
   if (id) {
-    const info = await dbTodo.findOne({openid, id});
+    return dbTodo.update({ openid, id }, params);
   } else {
-    
+    const value = {
+      openid,
+      ...params,
+    };
+    return dbTodo.insert(value);
   }
+}
+/**
+ * 批量删除记录
+ * @export
+ * @param {Array<string>} ids
+ * @returns
+ */
+export async function delTodo(ids: Array<string>) {
+  return dbTodo.getModal().updateMany({ id: { $in: ids } }, { status: -1 });
 }

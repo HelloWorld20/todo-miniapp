@@ -1,0 +1,78 @@
+
+
+button::after {
+  border: none;
+}
+
+image {
+  display: block;
+}
+
+image:active {
+  opacity: 0.5;
+}
+
+.block:active {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.text:active {
+  opacity: 0.5;
+}
+.color {
+  color: red;
+}
+.module {
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(238, 238, 238, 1);
+  border-radius: 8px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.08);
+}
+.module:active {
+  box-shadow: none;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes shakeShow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shakeHide {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
