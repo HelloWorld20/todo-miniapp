@@ -9,7 +9,8 @@ export enum ETodoType {
 
 const model = {
   openid: String,
-  type: ETodoType, // 种类：ACTION、FOUCUSED、DESSERT
+  id: String,
+  type: String, // 种类：ACTION、FOUCUSED、DESSERT
   urgency: Number, // 紧急性
   significance: Number, // 重要性
   priority: Number, // 优先级
@@ -23,7 +24,7 @@ export const insert = async (value: any) => {
 };
 
 export const find = async (condition?: any) => {
-  return mongo.find(COLLECTION, schema);
+  return mongo.find(COLLECTION, schema, condition);
 };
 
 export const findOne = async (condition: any) => {

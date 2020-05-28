@@ -4,6 +4,7 @@ import { View, Button, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 
 import { add, minus, asyncAdd } from "../../actions/counter";
+import request from "../../utils/request";
 
 import "./index.less";
 
@@ -19,14 +20,14 @@ import "./index.less";
 
 type PageStateProps = {
   counter: {
-    num: number
-  }
+    num: number;
+  };
 };
 
 type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
+  add: () => void;
+  dec: () => void;
+  asyncAdd: () => any;
 };
 
 type PageOwnProps = {};
@@ -36,7 +37,7 @@ type PageState = {};
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
 
 interface Index {
-  props: IProps
+  props: IProps;
 }
 
 @connect(
@@ -56,8 +57,6 @@ interface Index {
   })
 )
 class Index extends Component {
-
-
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
   }
@@ -79,16 +78,23 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  request() {
+    request
+      .request("/api/todo/list", {}, "GET")
+      .then(res => console.log("res", res));
+  }
+
   render() {
     return (
-      <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>
+      <View className="index">
+        <Button onClick={this.request}>request</Button>
+        <Button className="add_btn" onClick={this.props.add}>
           +
         </Button>
-        <Button className='dec_btn' onClick={this.props.dec}>
+        <Button className="dec_btn" onClick={this.props.dec}>
           -
         </Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>
+        <Button className="dec_btn" onClick={this.props.asyncAdd}>
           async
         </Button>
         <View>

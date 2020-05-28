@@ -1,5 +1,18 @@
 import * as IORedis from "ioredis";
 
+export declare class IRedisClient {
+  isReady: boolean;
+  conf: any;
+  name: string;
+  client: any;
+
+  create(conf: any): IORedis.Redis | null;
+
+  get(key: string): Promise<any>;
+
+  set(key: string, value: string, expire: number): void;
+}
+
 export default class Redis {
   isReady: boolean;
   conf: any;
@@ -12,6 +25,7 @@ export default class Redis {
     this.client = this.create(conf);
   }
   create(conf: any) {
+    
     const client = new IORedis(conf.server);
     client.on("connect", () => {
       console.log("redis连接成功");
@@ -42,7 +56,7 @@ export default class Redis {
       });
     });
   }
-  set(key: string, value: string) {
-    this.client.set(key, value);
+  set(key: string, value: string, expire: number) {
+    this.client.set(key, value, "EX", expire);
   }
 }

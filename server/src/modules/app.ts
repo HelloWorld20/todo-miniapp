@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
+// import * as cookieParser from "cookie-parser";
 import * as config from "./config";
 import _404 from "./middlewares/404";
 import _error from "./middlewares/error";
@@ -36,7 +36,7 @@ export function createApp(settings: any) {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(cookieParser());
+  // app.use(cookieParser());
 
   if (middlewareStartHook) middlewareStartHook(app);
 

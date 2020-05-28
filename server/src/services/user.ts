@@ -2,6 +2,9 @@ import * as authSrv from "./auth";
 import * as dbUser from "../db/user";
 import { Request } from "express";
 import { ServiceError, HTTP_STATUS } from "../modules";
+import { setSession } from "../middlewares/session";
+
+import * as uuid from "uuid";
 
 const Hashids = require("hashids/cjs");
 
@@ -14,24 +17,37 @@ const hashids = new Hashids("userinfo salt", 10);
  * @param {string} code Taro.login生成的code
  * @returns {Promise<string>}
  */
-export async function login(req: Request, code: string): Promise<string> {
+export async function login(
+  req: Request,
+  code: string
+): Promise<{
+  userId: string;
+  token: string;
+}> {
   const { openid } = await authSrv.getUserInfo(code);
   if (req.session) {
     req.session.openid = openid;
   }
-
+  const userId = hashids.encode(new Date().getTime());
   dbUser.findOne({ openid }).then((userInfo) => {
     if (!userInfo) {
       const value = {
         openid,
-        userId: hashids.encode(new Date().getTime()),
+        userId,
         state: 1,
       };
       dbUser.insert(value);
     }
   });
+  // 生成一个token、保存再session里，返回给前端
+  const token = uuid.v4();
 
-  return "登陆成功";
+  await setSession(token, { openid });
+
+  return {
+    userId,
+    token,
+  };
 }
 /**
  * 获取用户信息

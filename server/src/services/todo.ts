@@ -3,6 +3,10 @@ import { Request } from "express";
 import * as dbTodo from "../db/todo";
 import * as _ from "lodash";
 
+const Hashids = require("hashids/cjs");
+
+const hashids = new Hashids("todoItem salt", 10);
+
 /**
  * 获取当前账户下
  * @export
@@ -28,6 +32,9 @@ export async function getTodoItem(req: Request, id: string) {
   }
   const openid: string = req.session && req.session.openid;
   const result = await dbTodo.find({ openid, id });
+  if (!result.length) {
+    throw new ServiceError(HTTP_STATUS.NOT_FOUND, "找不到对应记录");
+  }
   return result;
 }
 /**
@@ -53,16 +60,27 @@ export async function addOrUpdateTodo(
   },
   id?: string
 ) {
-  if (!params) {
+  // @ts-ignore
+  if (Object.keys(params).some((item) => params[item] === undefined)) {
     throw new ServiceError(HTTP_STATUS.BAD_REQUEST, "参数错误");
   }
+
+  if (!dbTodo.ETodoType[params.type]) {
+    throw new ServiceError(HTTP_STATUS.BAD_REQUEST, "type参数错误");
+  }
+
   const openid: string = req.session && req.session.openid;
 
   if (id) {
-    return dbTodo.update({ openid, id }, params);
+    const result = await dbTodo.update({ openid, id }, params);
+    if (!result.nModified) {
+      throw new ServiceError(HTTP_STATUS.NOT_FOUND, "没有找到对应记录");
+    }
+    return result;
   } else {
     const value = {
       openid,
+      id: hashids.encode(new Date().getTime()),
       ...params,
     };
     return dbTodo.insert(value);
