@@ -11,12 +11,5 @@ router.post(
   })
 );
 
-router.get(
-  "/",
-  catchError(async (req, res) => {
-    const result = await userSrv.getUserInfo(req);
-    response.json(res, result);
-  })
-);
 
 export default router;

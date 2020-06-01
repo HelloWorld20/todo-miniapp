@@ -1,6 +1,6 @@
 /*
- * @Author: jianghong.wei 
- * @Date: 2020-05-20 14:10:10 
+ * @Author: jianghong.wei
+ * @Date: 2020-05-20 14:10:10
  * @Last Modified by: jianghong.wei
  * @Last Modified time: 2020-05-26 15:45:35
  * 用户信息，数据库控制
@@ -18,6 +18,9 @@ const model = {
   // longitude: Number,
   // nickName: String,
   openid: String,
+  userId: String,
+  createTime: String, // 首次登陆时间
+  lastLoginTime: String, // 上次登陆时间
   // province: String,
   // sex: Number,
   // unionid: Number,

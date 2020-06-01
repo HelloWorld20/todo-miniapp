@@ -29,6 +29,7 @@
     "hashids": "^2.1.0",
     "ioredis": "^4.14.1",
     "lodash": "^4.17.15",
+    "moment": "^2.26.0",
     "mongoose": "^5.7.6",
     "nodemon": "^1.19.4",
     "redis": "^2.8.0",

@@ -24,7 +24,4 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-export default function configStore() {
-  const store = createStore(rootReducer, enhancer);
-  return store;
-}
+export default createStore(rootReducer, enhancer);

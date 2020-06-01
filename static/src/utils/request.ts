@@ -3,21 +3,17 @@
  * @Author: jianghong.wei
  * @Date: 2020-05-27 14:19:26
  * @Last Modified by: jianghong.wei
- * @Last Modified time: 2020-05-28 16:23:33
+ * @Last Modified time: 2020-05-28 17:00:27
  */
 import Taro from "@tarojs/taro";
 
 const HOST = "http://localhost.rabbitpre.com:4000";
 
 class Request {
-  constructor() {}
 
   static interceptor = {
     request: params => {
       params.url = HOST + params.url;
-      params.header = {
-        'x-token': 'tokenstring'
-      }
       return params;
     },
     response: res => {
@@ -36,7 +32,6 @@ class Request {
         url,
         method
       });
-      console.log("before request");
       Taro.request({
         ...params,
         success: res => {
